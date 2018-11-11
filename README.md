@@ -28,7 +28,7 @@ eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/cgf.13589},
 
 ## Teaser
 
-![Picture](https://github.com/jijup/VoronoiCurve/blob/master/assets/cgf.png)
+![Picture](https://github.com/jijup/VoronoiCurve/blob/master/assets/teaser.jpg)
 
 ## Feedback
 
