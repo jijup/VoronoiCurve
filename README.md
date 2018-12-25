@@ -1,5 +1,5 @@
 # Voronoi based Curve Reconstruction
-An incremental labeling algorithm
+An incremental labeling algorithm for curve reconstruction and medial axis extraction.
 
 ## Introduction
 The repo contains the source code of the paper, Jiju Peethambaran, Amal Dev, Andrea Taglliasacchi, Ruisheng Wang and Ramanathan Muthuganapathy, "[Incremental labeling for Shape Reconstruction](https://onlinelibrary.wiley.com/doi/full/10.1111/cgf.13589#)", Computer Graphics Forum, 2018.
@@ -24,13 +24,11 @@ url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/cgf.13589},
 eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/cgf.13589},
 }
 
-
-
 ## Teaser
 
-![Picture](https://github.com/jijup/VoronoiCurve/blob/master/assets/cgf.png)
+![Picture](https://github.com/jijup/VoronoiCurve/blob/master/assets/teaser.jpg)
 
 ## Feedback
 
 You may send your comments or feedback on the software to jijupnair2000@gmail.com
-This is a build for unix environments. A windows build will be pushed soon
+This is a build for unix environments. A windows build will be pushed soon.
