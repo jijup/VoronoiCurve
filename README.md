@@ -31,4 +31,4 @@ eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/cgf.13589},
 ## Feedback
 
 You may send your comments or feedback on the software to jijupnair2000@gmail.com
-This is a build for unix environments. A windows build will be pushed soon.
+This repo is for unix environment (I've tested it on Ubuntu 18.04 LTS). 
