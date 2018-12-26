@@ -55,7 +55,7 @@ private:
 	vector<pair<int,int>> _boundary;
 	void reconstruct(vector<pair<double, double> > *pointVec);
 	void collectBoundaryIndices(int peels, int peelpci[], int peelcind[], Point_2 peelpcon[][][], Point_2 peelcon[][][]);
-	int getIndex();
+	int getIndex(double, double);
 
 public:
 	VoronoiCurve(vector<pair<double, double> > *pointVec);
