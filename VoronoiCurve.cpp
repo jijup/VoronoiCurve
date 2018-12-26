@@ -2,77 +2,9 @@
 #include "VoronoiCurve.h"
 
 
-
-void pointset(void)
-{
-    glPointSize(6.0);
-    glColor3f(0.0, 0.0, 0.0);
-    for(int i=0;i<fullindex;i++)
-        drawFilledCircle(fullinput[i][0],fullinput[i][1],ip);
-    glColor3f(1.0, 0.2, 0.2);
-    FILE *fp2;
-    char n1[255];
-    strcpy(n1,"wdm");
-    strcat(n1,name);
-     printf("%s",n1);
-    fp2=fopen(n1,"w");
-    glLineWidth(3.0);
-    glEnable( GL_LINE_SMOOTH );
-    glEnable( GL_POLYGON_SMOOTH );
-    glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
-    glHint( GL_POLYGON_SMOOTH_HINT, GL_NICEST );
-    glColor3f(0.18, 0.69, 0.25);
-    int pts[1000][4];
-    int ptsi=0;
-    for(int k=0;k<peels;k++)
-        for(int i=0;i<peelpci[k];i++)
-        {
-            pts[ptsi][0]=(int)peelpcon[0][i][0].x();
-            pts[ptsi][1]=(int)peelpcon[0][i][0].y();
-            pts[ptsi][2]=(int)peelpcon[0][i][1].x();
-            pts[ptsi][3]=(int)peelpcon[0][i][1].y();
-            ptsi++;
-        }
-    glColor3f(0.98, 0.69, 0.25);
-   for(int k=0;k<peels;k++)
-        for(int y1=0;y1<peelcind[k];y1++)
-        {
-            {
-                pts[ptsi][0]=(int)peelcon[0][y1][0].x();
-                pts[ptsi][1]=(int)peelcon[0][y1][0].y();
-                pts[ptsi][2]=(int)peelcon[0][y1][1].x();
-                pts[ptsi][3]=(int)peelcon[0][y1][1].y();
-                ptsi++;
-            }
-        }
-    for(int i=0;i<ptsi;i++)
-    {
-        int fl=0;
-        for(int j=0;j<i;j++)
-        {
-        if(pts[i][0]==pts[j][0]&&pts[i][1]==pts[j][1]&&pts[i][2]==pts[j][2]&&pts[i][3]==pts[j][3])
-        {
-            fl=1;
-        }
-            if(pts[i][2]==pts[j][0]&&pts[i][3]==pts[j][1]&&pts[i][0]==pts[j][2]&&pts[i][1]==pts[j][3])
-            {
-                fl=1;
-            }
-        }
-        if(fl==0)
-        {
-            glBegin(GL_LINES);
-            glVertex2f(pts[i][0],pts[i][1]);
-            glVertex2f(pts[i][2],pts[i][3]);
-            glEnd();
-            fprintf(fp2,"%d %d %d %d\n",pts[i][0],pts[i][1],pts[i][2],pts[i][3]);
-        }
-    }
-    fclose(fp2);
-}
-
 VD::Face_handle farr[10000];
 int fin=0;
+
 bool selected_face(VD::Face_handle fit1)
 {
     for(int i=0;i<fin;i++)
@@ -80,7 +12,7 @@ bool selected_face(VD::Face_handle fit1)
             return true;
     return false;
 }
-VD vd;
+
 int iterator1(VD::Vertex_iterator vit2)
 {
     int i;
