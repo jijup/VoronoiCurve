@@ -26,6 +26,11 @@
 #include <GL/glut.h>
 #endif
 
+
+
+namespace Voronoicrv
+{
+
 typedef CGAL::Exact_predicates_inexact_constructions_kernel                  K;
 typedef CGAL::Delaunay_triangulation_2<K>                                    DT;
 typedef CGAL::Delaunay_triangulation_adaptation_traits_2<DT>                 AT;
@@ -64,5 +69,6 @@ public:
 	VoronoiCurve(vector<pair<double, double> > *pointVec);
 	vector<pair<int,int>> *getBoundary();
 };
+}
 
 #endif /* VORONOICURVE_H_ */

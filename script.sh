@@ -12,4 +12,4 @@ sudo apt-get install libcgal-dev
 sudo sed -i '50 c\ bool flag=0;' /usr/include/CGAL/Point_3.h
 cmake .
 make
-echo $"Now you can execute the program by running ./VoronoiCurve  filename"
+echo $"Now you can execute the program by running ./TestVoronoi  filename"

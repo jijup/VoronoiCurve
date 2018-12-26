@@ -10,6 +10,9 @@
 
 #include "VoronoiCurve.h"
 
+using namespace std;
+using namespace Voronoicrv;
+
 
 #define NENDS 2           /* number of end "points" to draw */
 
@@ -18,8 +21,8 @@ int wd;                   /* GLUT window handle */
 int ends1[NENDS][2];       /* array of 2D points */
 int minx=999,miny=999,maxx=-999,maxy=-999;
 
-std::vector<std::pair<double, double> > pointVec;
-std::vector<std::pair<int,int> > *boundary;
+vector<pair<double, double> > pointVec;
+vector<pair<int,int> > *boundary;
 
 void init(void)
 {
@@ -132,6 +135,7 @@ void loadPointSet(string name)
 				if (!file.eof())
 					pointVec.push_back(pair<double, double>(x, y));
 			}
+		cout<<pointVec.size();
 		}
 		else
 		{
@@ -156,23 +160,23 @@ int main(int argc, char **argv)
 		filename=string(argv[1]);				
 	}
 	else{
-		std::cout<< "Usage" << argv[0] << filename << std::endl;
+		std::cout<< "Usage" << argv[0] << " filename" << std::endl;
 		return 0;
 	}
 	
-	init();
+    init();
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
     glutInitWindowSize(250, 250);
     wd = glutCreateWindow("Voronoi based Curve Reconstruction");
 	
 	
-	loadPointSet(filename);	
+    loadPointSet(filename);	
     VoronoiCurve *voronoiInstance=new VoronoiCurve(&pointVec);
-	boundary=voronoiInstance->getBoundary();
+    boundary=voronoiInstance->getBoundary();
 	
 	
-	glutReshapeFunc(reshape);
+    glutReshapeFunc(reshape);
     glutKeyboardFunc(kbd);
     glutDisplayFunc(display);
     glClearColor(1.0, 1.0, 1.0, 0.0);

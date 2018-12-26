@@ -1,6 +1,8 @@
 
 #include "VoronoiCurve.h"
 
+namespace Voronoicrv
+{
 
 VD::Face_handle farr[10000];
 float bb[10000][5];
@@ -105,7 +107,7 @@ VD::Vertex_iterator VoronoiCurve::find_it(Point_2 p)
 
 int VoronoiCurve::getIndex(double x, double y)
 {
-	for(int i=0; i<points->size(); ++i)
+	for(int i=0; i<(int)points->size(); ++i)
 	{
 		if (((*points)[i].first==x)&&((*points)[i].second==y))
 			return i;
@@ -146,7 +148,7 @@ Point_2 mat[100000][3],pcon[100000][2],emat[100000][3],con[100000][2],peelcon[10
 int peelcind[100000],peelpci[100000],peelmi[100000],peelemi[100000];
 
 
-    Site_2 site;
+    	Site_2 site;
 	
 	int i, count1;
 
@@ -173,7 +175,7 @@ bloop1:
     }while(fit!=vd.faces_end());
     int bou=0;
     int n1c=0;
-    DT::Vertex_circulator vc=vd.dual().incident_vertices(vd.dual().infinite_vertex()),done(vc);
+    DT::Vertex_circulator  		vc=vd.dual().incident_vertices(vd.dual().infinite_vertex()),done(vc);
     do{
         chull[ci][0]=vc->point().x();
         chull[ci][1]=vc->point().y();
@@ -540,3 +542,5 @@ vector<pair<int,int>> *VoronoiCurve::getBoundary()
 {
 	return &_boundary;
 }
+}
+
