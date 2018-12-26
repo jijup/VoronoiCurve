@@ -111,7 +111,7 @@ int VoronioCurve::getIndex(double x, double y)
 	return -1;		
 }
 
-void VoronoiCurve::collectBoundaryIndices(int peels, int peelpci[], int peelcind[], Point_2 peelpcon[][][], Point_2 peelcon[][][])
+void VoronoiCurve::collectBoundaryIndices(int peels, int peelpci[], int peelcind[], Point_2 peelpcon[][10000][2], Point_2 peelcon[][10000][2])
 {
 	int numEdges=0;
     //consider only outer peel
@@ -139,7 +139,6 @@ void VoronoiCurve::reconstruct(vector<pair<double, double> > *pointVec)
 {   
 int chull[100000][2],ci=0,mi=0,inpts[100000][2],ii=0,bi=0,li=0,pci=0,emi=0,cind=0,fullinput[100000][2],fullindex=0,peels=0;
 float bb[10000][5];
-int minx=999,miny=999,maxx=-999,maxy=-999;
 double l11[2],l12[2],l21[2],l22[2];
 Point_2 mat[100000][3],pcon[100000][2],emat[100000][3],con[100000][2],peelcon[100][100000][3],peelpcon[100][100000][3],peelmat[100][100000][3],peelemat[100][100000][3];
 int peelcind[100000],peelpci[100000],peelmi[100000],peelemi[100000];
