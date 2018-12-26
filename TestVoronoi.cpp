@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <utility>
 
 #include "VoronoiCurve.h"
 
@@ -17,8 +18,8 @@ int wd;                   /* GLUT window handle */
 int ends1[NENDS][2];       /* array of 2D points */
 int minx=999,miny=999,maxx=-999,maxy=-999;
 
-vector<pair<double, double> > pointVec;
-vector<pair<int,int> > *boundary;
+std::vector<std::pair<double, double> > pointVec;
+std::vector<std::pair<int,int> > *boundary;
 
 void init(void)
 {
@@ -60,12 +61,14 @@ void pointset(void)
     glHint( GL_POLYGON_SMOOTH_HINT, GL_NICEST );
     glColor3f(0.18, 0.69, 0.25);
     
-    for(int i=0;i<boundary->size();i++)
+    //for(int i=0;i<boundary->size();i++)
+for(auto & val : *boundary)
     {
+std::pair<int, int> indices=val;
         
             glBegin(GL_LINES);
-            glVertex2f(pointVec[boundary[i]->first].first,pointVec[boundary[i]->first].second);
-            glVertex2f(pointVec[boundary[i]->second].first,pointVec[boundary[i]->second].second);
+            glVertex2f(pointVec[indices.first].first,pointVec[indices.first].second);
+            glVertex2f(pointVec[indices.second].first,pointVec[indices.second].second);
             glEnd();
             
         

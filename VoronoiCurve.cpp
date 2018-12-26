@@ -3,7 +3,9 @@
 
 
 VD::Face_handle farr[10000];
-int fin=0;
+float bb[10000][5];
+int fin=0,bi=0;
+
 
 bool selected_face(VD::Face_handle fit1)
 {
@@ -13,9 +15,10 @@ bool selected_face(VD::Face_handle fit1)
     return false;
 }
 
-int iterator1(VD::Vertex_iterator vit2)
+int VoronoiCurve::iterator1(VD::Vertex_iterator vit2)
 {
     int i;
+    double l11[2],l12[2],l21[2],l22[2];
     DT::Vertex_handle vit3;
     VD::Halfedge_around_vertex_circulator he1=vit2->incident_halfedges();
     VD::Face_handle fh1;
@@ -86,7 +89,7 @@ int iterator1(VD::Vertex_iterator vit2)
     return 1;
 }
 
-VD::Vertex_iterator find_it(Point_2 p)
+VD::Vertex_iterator VoronoiCurve::find_it(Point_2 p)
 {
     int a,b,c,d;
     VD::Vertex_iterator vit1=vd.vertices_begin();
@@ -100,18 +103,18 @@ VD::Vertex_iterator find_it(Point_2 p)
 }
 
 
-int VoronioCurve::getIndex(double x, double y)
+int VoronoiCurve::getIndex(double x, double y)
 {
-	for(int i=0; i<pointVec->size(); ++i)
+	for(int i=0; i<points->size(); ++i)
 	{
-		if (((*pointVec[i]).first==x)&&((*pointVec[i]).second==y))
+		if (((*points)[i].first==x)&&((*points)[i].second==y))
 			return i;
 	}
 	
 	return -1;		
 }
 
-void VoronoiCurve::collectBoundaryIndices(int peels, int peelpci[], int peelcind[], Point_2 peelpcon[][10000][2], Point_2 peelcon[][10000][2])
+void VoronoiCurve::collectBoundaryIndices(int peels, int peelpci[], int peelcind[], Point_2 peelpcon[][100000][3], Point_2 peelcon[][100000][3])
 {
 	int numEdges=0;
     //consider only outer peel
@@ -123,7 +126,7 @@ void VoronoiCurve::collectBoundaryIndices(int peels, int peelpci[], int peelcind
             
         }    
    
-        for(int i=0;y1<peelcind[0];i++)
+        for(int i=0;i<peelcind[0];i++)
         {
             {
                 _boundary.push_back(pair<int, int>(getIndex(peelcon[0][i][0].x(),peelcon[0][i][0].y()), getIndex(peelcon[0][i][1].x(),peelcon[0][i][1].y())));				
@@ -131,16 +134,14 @@ void VoronoiCurve::collectBoundaryIndices(int peels, int peelpci[], int peelcind
             }
         }
 		
-	boundaryIndices.resize(numEdges);
+	_boundary.resize(numEdges);
 }
 
 
 
 void VoronoiCurve::reconstruct(vector<pair<double, double> > *pointVec)
 {   
-int chull[100000][2],ci=0,mi=0,inpts[100000][2],ii=0,bi=0,li=0,pci=0,emi=0,cind=0,fullinput[100000][2],fullindex=0,peels=0;
-float bb[10000][5];
-double l11[2],l12[2],l21[2],l22[2];
+int chull[100000][2],ci=0,mi=0,inpts[100000][2],ii=0,li=0,pci=0,emi=0,cind=0,fullinput[100000][2],fullindex=0,peels=0;
 Point_2 mat[100000][3],pcon[100000][2],emat[100000][3],con[100000][2],peelcon[100][100000][3],peelpcon[100][100000][3],peelmat[100][100000][3],peelemat[100][100000][3];
 int peelcind[100000],peelpci[100000],peelmi[100000],peelemi[100000];
 
@@ -158,7 +159,7 @@ int peelcind[100000],peelpci[100000],peelmi[100000],peelemi[100000];
     int kl=0;
 
 bloop1:
-    int i=0;
+     i=0;
     Point_2 p;
     int n,unb=0,b=0;
     n=i;
@@ -530,7 +531,9 @@ complete:
 
 VoronoiCurve::VoronoiCurve(vector<pair<double, double> > *pointVec)
 {
-	reconstruct(pointVec);		
+        points=pointVec;
+	reconstruct(pointVec);
+		
 }
 
 vector<pair<int,int>> *VoronoiCurve::getBoundary()
