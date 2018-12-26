@@ -530,7 +530,7 @@ complete:
 
 VoronoiCurve::VoronoiCurve(vector<pair<double, double> > *pointVec)
 {
-	reconstruct(vd, pointVec);		
+	reconstruct(pointVec);		
 }
 
 vector<pair<int,int>> *VoronoiCurve::getBoundary()
