@@ -107,31 +107,31 @@ VD::Vertex_iterator VoronoiCurve::find_it(Point_2 p)
 
 int VoronoiCurve::getIndex(double x, double y)
 {
-	for(int i=0; i<(int)points->size(); ++i)
+	for(int i=0; i<(int)points.size(); ++i)
 	{
-		if (((*points)[i].first==x)&&((*points)[i].second==y))
+		if ((points[i].first==x)&&(points[i].second==y))
 			return i;
 	}
 	
 	return -1;		
 }
 
-void VoronoiCurve::collectBoundaryIndices(int peels, int peelpci[], int peelcind[], Point_2 peelpcon[][100000][3], Point_2 peelcon[][100000][3])
+void VoronoiCurve::collectBoundaryIndices(int pci, int cind, Point_2 pcon[][2], Point_2 con[][2])
 {
 	int numEdges=0;
     //consider only outer peel
-        for(int i=0;i<peelpci[0];i++)
+        for(int i=0;i<pci;i++)
         {     
-             _boundary.push_back(pair<int, int>(getIndex(peelpcon[0][i][0].x(),peelpcon[0][i][0].y()), getIndex(peelpcon[0][i][1].x(),peelpcon[0][i][1].y())));				
+             _boundary.push_back(pair<int, int>(getIndex(pcon[i][0].x(),pcon[i][0].y()), getIndex(pcon[i][1].x(),pcon[i][1].y())));				
             numEdges++;
 			
             
         }    
    
-        for(int i=0;i<peelcind[0];i++)
+        for(int i=0;i<cind;i++)
         {
             {
-                _boundary.push_back(pair<int, int>(getIndex(peelcon[0][i][0].x(),peelcon[0][i][0].y()), getIndex(peelcon[0][i][1].x(),peelcon[0][i][1].y())));				
+                _boundary.push_back(pair<int, int>(getIndex(con[i][0].x(),con[i][0].y()), getIndex(con[i][1].x(),con[i][1].y())));				
             numEdges++;
             }
         }
@@ -141,27 +141,27 @@ void VoronoiCurve::collectBoundaryIndices(int peels, int peelpci[], int peelcind
 
 
 
-void VoronoiCurve::reconstruct(vector<pair<double, double> > *pointVec)
+void VoronoiCurve::reconstruct()
 {   
-int chull[100000][2],ci=0,mi=0,inpts[100000][2],ii=0,li=0,pci=0,emi=0,cind=0,fullinput[100000][2],fullindex=0,peels=0;
-Point_2 mat[100000][3],pcon[100000][2],emat[100000][3],con[100000][2],peelcon[100][100000][3],peelpcon[100][100000][3],peelmat[100][100000][3],peelemat[100][100000][3];
-int peelcind[100000],peelpci[100000],peelmi[100000],peelemi[100000];
+int ci=0,li=0,pci=0,mi=0,emi=0,cind=0;
+double chull[1000][2];
+Point_2 mat[1000][2],pcon[1000][2],emat[1000][2],con[1000][2];
 
 
-    	Site_2 site;
-	
+
+    	Site_2 site;	
 	int i, count1;
 
-	for (i = 0; i < (int)pointVec->size(); i++)
+	for (i = 0; i < (int)points.size(); i++)
 	{
-		site= Site_2((*pointVec)[i].first, (*pointVec)[i].second);
+		site= Site_2(points[i].first, points[i].second);
 		vd.insert(site);
 	}
     
     int kl=0;
 
 bloop1:
-     i=0;
+    i=0;
     Point_2 p;
     int n,unb=0,b=0;
     n=i;
@@ -183,7 +183,7 @@ bloop1:
     }while(++vc!=done);
     int allconvex=0;
     DT::Face_iterator fit1=vd.dual().faces_begin();
-    if(ci==pointVec->size())
+    if(ci==points.size())
     {
         allconvex=1;
         n1c=1;
@@ -417,103 +417,8 @@ comp:
         }
         hit3++;
     }while(hit3!=vd.halfedges_end());
-    }
-complete:
-    if(allconvex==1)
-    {
-        for(int j=0;j<ci;j++)
-        {
-            con[j][0]=Point_2(chull[j][0],chull[j][1]);
-            con[j][1]=Point_2(chull[(j+1)%ci][0],chull[(j+1)%ci][1]);
-        }
-        cind=ci;
-    }
-    
-    int k=0,arr[1000][2];
-    for(int i=0;i<pointVec->size();i++)
-    {
-        int fl1=1;
-        for(int j=0;j<cind;j++)
-            if((inpts[i][0]==(int)(con[j][0].x())&&inpts[i][1]==(int)(con[j][0].y()))||(inpts[i][0]==(int)(con[j][1].x())&&inpts[i][1]==(int)(con[j][1].y())))
-                fl1=0;
-        for(int j=0;j<pci;j++)
-            if((inpts[i][0]==(int)(pcon[j][0].x())&&inpts[i][1]==(int)(pcon[j][0].y()))||(inpts[i][0]==(int)(pcon[j][1].x())&&inpts[i][1]==(int)(pcon[j][1].y())))
-                fl1=0;
-        if(fl1==1)
-        {
-            arr[k][0]=inpts[i][0];
-            arr[k][1]=inpts[i][1];
-            k++;
-        }
-    }
-	
-    if(k>2)
-    {
-        vd.clear();
-        for(int i=0;i<k;i++)
-        {
-            vd.insert(Point_2(arr[i][0],arr[i][1]));
-            inpts[i][0]=arr[i][0];
-            inpts[i][1]=arr[i][1];
-        }
-        for(int j=0;j<cind;j++)
-        {
-            peelcon[peels][j][0]=con[j][0];
-            peelcon[peels][j][1]=con[j][1];
-        }
-        for(int j=0;j<pci;j++)
-        {
-            peelpcon[peels][j][0]=pcon[j][0];
-            peelpcon[peels][j][1]=pcon[j][1];
-        }
-        for(int j=0;j<mi;j++)
-        {
-            peelmat[peels][j][0]=mat[j][0];
-            peelmat[peels][j][1]=mat[j][1];
-        }
-        for(int j=0;j<emi;j++)
-        {
-            peelemat[peels][j][0]=emat[j][0];
-            peelemat[peels][j][1]=emat[j][1];
-        }
-        ii=k;
-        peelcind[peels]=cind;
-        peelpci[peels]=pci;
-        peelmi[peels]=mi;
-        peelemi[peels]=emi;
-        peels++;
-        ci=0;mi=0;bi=0;li=0;pci=0;emi=0;cind=0;
-        goto bloop1;
-    }
-    for(int j=0;j<cind;j++)
-    {
-        peelcon[peels][j][0]=con[j][0];
-        peelcon[peels][j][1]=con[j][1];
-    }
-    for(int j=0;j<pci;j++)
-    {
-        peelpcon[peels][j][0]=pcon[j][0];
-        peelpcon[peels][j][1]=pcon[j][1];
-    }
-    for(int j=0;j<mi;j++)
-    {
-        peelmat[peels][j][0]=mat[j][0];
-        peelmat[peels][j][1]=mat[j][1];
-    }
-    for(int j=0;j<emi;j++)
-    {
-        peelemat[peels][j][0]=emat[j][0];
-        peelemat[peels][j][1]=emat[j][1];
-    }
-    peelcind[peels]=cind;
-    peelpci[peels]=pci;
-    peelmi[peels]=mi;
-    peelemi[peels]=emi;
-    peels++;
-    vd.clear();
-    for(int i=0;i<fullindex;i++)
-        vd.insert(Point_2(fullinput[i][0],fullinput[i][1]));
-    hit=vd.halfedges_begin();
+
+ hit=vd.halfedges_begin();
     mi=0;
     do{
         if(hit->has_source()&&hit->has_target())
@@ -527,14 +432,27 @@ complete:
         }
         hit++;
     }while(hit!=vd.halfedges_end());
+    }
+complete:
+    if(allconvex==1)
+    {
+        for(int j=0;j<ci;j++)
+        {
+            con[j][0]=Point_2(chull[j][0],chull[j][1]);
+            con[j][1]=Point_2(chull[(j+1)%ci][0],chull[(j+1)%ci][1]);
+        }
+        cind=ci;
+    }
+      
+   
     
-  collectBoundaryIndices(peels, peelpci, peelcind, peelpcon, peelcon);
+  collectBoundaryIndices(ci, cind, pcon, con);
 }
 
-VoronoiCurve::VoronoiCurve(vector<pair<double, double> > *pointVec)
+VoronoiCurve::VoronoiCurve(vector<pair<double, double> > pointVec)
 {
         points=pointVec;
-	reconstruct(pointVec);
+	reconstruct();
 		
 }
 

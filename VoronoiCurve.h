@@ -58,15 +58,15 @@ class VoronoiCurve
 private:
 	VD vd;
 	vector<pair<int,int>> _boundary;
-        vector<pair<double, double> > *points;
-	void reconstruct(vector<pair<double, double> > *pointVec);
-	void collectBoundaryIndices(int peels, int peelpci[], int peelcind[], Point_2 peelpcon[][100000][3], Point_2 peelcon[][100000][3]);
+        vector<pair<double, double> > points;
+	void reconstruct();
+	void collectBoundaryIndices(int pci, int cind, Point_2 peelpcon[][2], Point_2 con[][2]);
 	int getIndex(double, double);
         int iterator1(VD::Vertex_iterator vit);
-       VD::Vertex_iterator find_it(Point_2 p);
+        VD::Vertex_iterator find_it(Point_2 p);
 
 public:
-	VoronoiCurve(vector<pair<double, double> > *pointVec);
+	VoronoiCurve(vector<pair<double, double> > pointVec);
 	vector<pair<int,int>> *getBoundary();
 };
 }
