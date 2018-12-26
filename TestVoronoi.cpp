@@ -172,8 +172,8 @@ int main(int argc, char **argv)
 	
 	
 	loadPointSet(filename);	
-    VoronoiCurve voronoiInstance=new VoronoiCurve(&pointVec);
-	boundary=voronoiInstance.getBoundary();
+    VoronoiCurve *voronoiInstance=new VoronoiCurve(&pointVec);
+	boundary=voronoiInstance->getBoundary();
 	
 	
 	glutReshapeFunc(reshape);
