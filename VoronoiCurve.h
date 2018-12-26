@@ -54,7 +54,7 @@ private:
 	VD vd;
 	vector<pair<int,int>> _boundary;
 	void reconstruct(vector<pair<double, double> > *pointVec);
-	void collectBoundaryIndices(int peels, int peelpci[], int peelcind[], Point_2 peelpcon[][][], Point_2 peelcon[][][]);
+	void collectBoundaryIndices(int peels, int peelpci[], int peelcind[], Point_2 peelpcon[][10000][2], Point_2 peelcon[][10000][2]);
 	int getIndex(double, double);
 
 public:
