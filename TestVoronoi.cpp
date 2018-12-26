@@ -18,6 +18,34 @@ std::vector<pair<int,int>> *boundary;
 GLdouble width, height;   /* window width and height */
 int wd;                   /* GLUT window handle */
 int ends1[NENDS][2];       /* array of 2D points */
+int minx=999,miny=999,maxx=-999,maxy=-999;
+char name[255];
+
+void init(void)
+{
+    width  = 1280.0;                 /* initial window width and height, */
+    height = 800.0;                  /* within which we draw. */
+    ends1[0][0] = (int)(0.25*width);  /* (0,0) is the lower left corner */
+    ends1[0][1] = (int)(0.75*height);
+    ends1[1][0] = (int)(0.75*width);
+    ends1[1][1] = (int)(0.25*height);
+    
+    return;
+}
+void drawFilledCircle(GLfloat x, GLfloat y, GLfloat radius)
+{
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    int i,triangleAmount = 20;
+    GLfloat twicePi = 2.0f * 3.14159265;
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(x, y);
+    //  glColor3f(1,0,0);
+    for(i = 0; i <= triangleAmount;i++)
+        glVertex2f(x + (radius * cos(i *  twicePi / triangleAmount)),y + (radius * sin(i * twicePi / triangleAmount)));
+    glEnd();
+}
+
 
 void pointset(void)
 {
@@ -126,7 +154,7 @@ void loadPointSet(string name)
 
 int main(int argc, char **argv)
 {
-	String filename;
+	string filename;
 		
 	if(argc>=2){
 		filename=string(argv[1]);				
