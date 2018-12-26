@@ -46,7 +46,7 @@ void pointset(void)
             glVertex2f(pointVec[(*boundary).first].first,pointVec[(*boundary).first].second);
             glVertex2f(pointVec[(*boundary).second].first,pointVec[(*boundary).second].second);
             glEnd();
-            fprintf(fp2,"%d %d %d %d\n",pts[i][0],pts[i][1],pts[i][2],pts[i][3]);
+            fprintf(fp2,"%d %d %d %d\n",pointVec[(*boundary).first].first,pointVec[(*boundary).first].second,pointVec[(*boundary).second].first,pointVec[(*boundary).second].second);
         
     }
     fclose(fp2);
@@ -145,7 +145,7 @@ int main(int argc, char **argv)
 	
 	loadPointSet(filename);	
     VoronoiCurve voronoiInstance=new VoronoiCurve(&pointVec);
-	boundary=voronoiInstance->getBoundary();
+	boundary=voronoiInstance.getBoundary();
 	
 	
 	glutReshapeFunc(reshape);
