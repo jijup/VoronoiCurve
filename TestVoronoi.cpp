@@ -71,10 +71,10 @@ void pointset(void)
     {
         
             glBegin(GL_LINES);
-            glVertex2f(pointVec[(*boundary).first].first,pointVec[(*boundary).first].second);
-            glVertex2f(pointVec[(*boundary).second].first,pointVec[(*boundary).second].second);
+            glVertex2f(pointVec[boundary[i]->first].first,pointVec[boundary[i]->first].second);
+            glVertex2f(pointVec[boundary[i]->second].first,pointVec[boundary[i]->second].second);
             glEnd();
-            fprintf(fp2,"%d %d %d %d\n",pointVec[(*boundary).first].first,pointVec[(*boundary).first].second,pointVec[(*boundary).second].first,pointVec[(*boundary).second].second);
+            fprintf(fp2,"%d %d %d %d\n",pointVec[boundary[i]->first].first,pointVec[(boundary[i]->first].second,pointVec[boundary[i]->second].first,pointVec[boundary[i]->second].second);
         
     }
     fclose(fp2);
