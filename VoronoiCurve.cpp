@@ -116,17 +116,18 @@ void VoronoiCurve::collectBoundaryIndices(int peels, int peelpci[], int peelcind
 	int numEdges=0;
     //consider only outer peel
         for(int i=0;i<peelpci[0];i++)
-        {           
-			_boundary[numEdges].first=getIndex(peelpcon[0][i][0].x(),peelpcon[0][i][0].y());
-            _boundary[numEdges++].second=getIndex(peelpcon[0][i][1].x(),peelpcon[0][i][1].y());
+        {     
+             _boundary.push_back(pair<int, int>(getIndex(peelpcon[0][i][0].x(),peelpcon[0][i][0].y()), getIndex(peelpcon[0][i][1].x(),peelpcon[0][i][1].y())));				
+            numEdges++;
+			
             
         }    
    
         for(int i=0;y1<peelcind[0];i++)
         {
             {
-                _boundary[numEdges].first=getIndex(peelcon[0][i][0].x(),peelcon[0][i][0].y());
-				_boundary[numEdges++].second=getIndex(peelcon[0][i][1].x(),peelcon[0][i][1].y());
+                _boundary.push_back(pair<int, int>(getIndex(peelcon[0][i][0].x(),peelcon[0][i][0].y()), getIndex(peelcon[0][i][1].x(),peelcon[0][i][1].y())));				
+            numEdges++;
             }
         }
 		

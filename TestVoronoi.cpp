@@ -10,16 +10,15 @@
 #include "VoronoiCurve.h"
 
 
-std::vector<pair<double, double> > pointVec;
-std::vector<pair<int,int>> *boundary;
-
 #define NENDS 2           /* number of end "points" to draw */
 
 GLdouble width, height;   /* window width and height */
 int wd;                   /* GLUT window handle */
 int ends1[NENDS][2];       /* array of 2D points */
 int minx=999,miny=999,maxx=-999,maxy=-999;
-char name[255];
+
+vector<pair<double, double> > pointVec;
+vector<pair<int,int> > *boundary;
 
 void init(void)
 {
@@ -54,12 +53,6 @@ void pointset(void)
     for(int i=0;i<pointVec.size();i++)
         drawFilledCircle(pointVec[i].first,pointVec[i].second,3.0);
     glColor3f(1.0, 0.2, 0.2);
-    FILE *fp2;
-    char n1[255];
-    strcpy(n1,"wdm");
-    strcat(n1,name);
-     printf("%s",n1);
-    fp2=fopen(n1,"w");
     glLineWidth(3.0);
     glEnable( GL_LINE_SMOOTH );
     glEnable( GL_POLYGON_SMOOTH );
@@ -71,13 +64,13 @@ void pointset(void)
     {
         
             glBegin(GL_LINES);
-            glVertex2f(pointVec[(*boundary[i]).first].first,pointVec[(*boundary[i]).first].second);
+            glVertex2f(pointVec[boundary[i]->first].first,pointVec[boundary[i]->first].second);
             glVertex2f(pointVec[boundary[i]->second].first,pointVec[boundary[i]->second].second);
             glEnd();
-            fprintf(fp2,"%d %d %d %d\n",pointVec[boundary[i]->first].first,pointVec[(boundary[i]->first].second,pointVec[boundary[i]->second].first,pointVec[boundary[i]->second].second);
+            
         
     }
-    fclose(fp2);
+    
 }
 void display(void)
 {
