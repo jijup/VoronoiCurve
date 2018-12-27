@@ -456,7 +456,7 @@ VoronoiCurve::VoronoiCurve(vector<pair<double, double> > pointVec)
 		
 }
 
-vector<pair<int,int>> *VoronoiCurve::getBoundary()
+vector<pair<int,int> > *VoronoiCurve::getBoundary()
 {
 	return &_boundary;
 }

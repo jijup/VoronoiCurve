@@ -57,7 +57,7 @@ class VoronoiCurve
 {
 private:
 	VD vd;
-	vector<pair<int,int>> _boundary;
+	vector<pair<int,int> > _boundary;
         vector<pair<double, double> > points;
 	void reconstruct();
 	void collectBoundaryIndices(int pci, int cind, Point_2 peelpcon[][2], Point_2 con[][2]);
@@ -67,7 +67,7 @@ private:
 
 public:
 	VoronoiCurve(vector<pair<double, double> > pointVec);
-	vector<pair<int,int>> *getBoundary();
+	vector<pair<int,int> > *getBoundary();
 };
 }
 
