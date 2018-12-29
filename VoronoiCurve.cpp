@@ -1,4 +1,3 @@
-
 #include "VoronoiCurve.h"
 
 namespace Voronoicrv
@@ -143,15 +142,14 @@ void VoronoiCurve::collectBoundaryIndices(int pci, int cind, Point_2 pcon[][2], 
 
 void VoronoiCurve::reconstruct()
 {   
-int ci=0,li=0,pci=0,mi=0,emi=0,cind=0;
+int ci=0,li=0,pci=0,mi=0,emi=0,cind=0, count1;
 double chull[1000][2];
 Point_2 mat[1000][2],pcon[1000][2],emat[1000][2],con[1000][2];
 
 
-
+//create voronoi
     	Site_2 site;	
-	int i, count1;
-
+	int i;
 	for (i = 0; i < (int)points.size(); i++)
 	{
 		site= Site_2(points[i].first, points[i].second);
@@ -160,19 +158,18 @@ Point_2 mat[1000][2],pcon[1000][2],emat[1000][2],con[1000][2];
     
     int kl=0;
 
-bloop1:
     i=0;
     Point_2 p;
-    int n,unb=0,b=0;
-    n=i;
+    int unb=0,bnd=0;    
     Face_iterator fit=vd.faces_begin();
     do{
         if(fit->is_unbounded())
             unb++;
         else
-            b++;
+            bnd++;
         fit++;
     }while(fit!=vd.faces_end());
+
     int bou=0;
     int n1c=0;
     DT::Vertex_circulator  		vc=vd.dual().incident_vertices(vd.dual().infinite_vertex()),done(vc);
@@ -442,8 +439,7 @@ complete:
             con[j][1]=Point_2(chull[(j+1)%ci][0],chull[(j+1)%ci][1]);
         }
         cind=ci;
-    }
-      
+    }     
    
     
   collectBoundaryIndices(ci, cind, pcon, con);
@@ -461,4 +457,3 @@ vector<pair<int,int> > *VoronoiCurve::getBoundary()
 	return &_boundary;
 }
 }
-

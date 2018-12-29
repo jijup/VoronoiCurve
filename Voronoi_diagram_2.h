@@ -467,7 +467,7 @@ namespace CGAL {
             Vertex_iterator vit=this->vertices_begin();
             for(int i=0;i<count;i++)
             {
-                if((int)status[i].pi.x()==(int)p.x()&&(int)status[i].pi.y()==(int)p.y())
+                if(fabs(status[i].pi.x()-p.x())<=0.0001&&fabs(status[i].pi.y()-p.y())<=0.0001)
                     return status[i].stat;
                 if(vit!=this->vertices_end())
                     vit++;
@@ -475,22 +475,22 @@ namespace CGAL {
         }
         void set_visit(Point_2 p)
         {
-            int a,b,c,d;
-            a=(int)p.x();
-            b=(int)p.y();
+            double a,b,c,d;
+            a=p.x();
+            b=p.y();
+std::cerr<<p.x()<<" "<<p.y()<<std::endl;
             for(int i=0;i<count;i++)
             {
-                c=(int)status[i].pi.x();
-                d=(int)status[i].pi.y();
-                if(a==c&&b==d)
+                c=status[i].pi.x();
+                d=status[i].pi.y();
+
+                if(fabs(a-c)<=0.001&&fabs(b-d)<=0.001)
                 {
-                    //printf("Setted visited ");
-                    //	std::cout<<p;
                     status[i].visit=true;
                     return;
                 }
             }
-            printf("INTERNAL ERRORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr In Header file\n");
+            printf("INTERNAL ERRORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr In Header file1\n");
         }
         void set_status(Point_2 p)
         {
@@ -504,11 +504,11 @@ namespace CGAL {
                 }
                 vit++;
             }
-            printf("INTERNAL ERRORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr In Header file\n");
+            printf("INTERNAL ERRORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr In Header file2\n");
         }
         bool check_visit(Point_2 p)
         {
-            int a,b,c,d;
+            double a,b,c,d;
             a=p.x();
             b=p.y();
             Vertex_iterator vit=this->vertices_begin();
@@ -516,7 +516,7 @@ namespace CGAL {
             {
                 c=status[i].pi.x();
                 d=status[i].pi.y();
-                if(a==c&&b==d)
+                if(fabs(a-c)<=0.0001&&fabs(b-d)<=0.0001)
                     return status[i].visit;
                 vit++;
             }

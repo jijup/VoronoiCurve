@@ -64,10 +64,10 @@ void pointset(void)
     glHint( GL_POLYGON_SMOOTH_HINT, GL_NICEST );
     glColor3f(0.18, 0.69, 0.25);
     
-    //for(int i=0;i<boundary->size();i++)
+    
 for(auto & val : *boundary)
     {
-std::pair<int, int> indices=val;
+    std::pair<int, int> indices=val;
         
             glBegin(GL_LINES);
             glVertex2f(pointVec[indices.first].first,pointVec[indices.first].second);
@@ -131,6 +131,15 @@ void loadPointSet(string name)
 			{
 				float x, y;
 				file >> x >> y;
+	if(x>maxx)
+            maxx=x;
+        if(x<minx)
+            minx=x;
+        if(y>maxy)
+            maxy=y;
+        if(y<miny)
+	miny=y;
+
 
 				if (!file.eof())
 					pointVec.push_back(pair<double, double>(x, y));
